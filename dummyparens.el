@@ -35,7 +35,7 @@
                  ("(" ")" nil)
                  ("[" "]" nil)
                  ("{" "}" dp-brace-post-handler)
-                 ("\"" "\"" dp-brace-post-handler)
+                 ("\"" "\"" nil)
                  ))
 
 (defun dp-self-insert-command (arg)
