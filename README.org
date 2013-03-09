@@ -1,0 +1,6 @@
+* About
+Dummyparens is a simple utility providing parentheses auto-pairing and
+wrapping behavior
+
+It's intended to be very simple and non-invasive as you would expect
+such simple functionality to be.
