@@ -31,12 +31,13 @@
     (indent-region (car dp-wrap) (cdr dp-wrap)))
   (indent-for-tab-command))
 
-(setq dp-pairs '(
-                 ("(" ")" nil)
-                 ("[" "]" nil)
-                 ("{" "}" dp-brace-post-handler)
-                 ("\"" "\"" nil)
-                 ))
+(defcustom dp-pairs '(
+                      ("(" ")" nil)
+                      ("[" "]" nil)
+                      ("{" "}" dp-brace-post-handler)
+                      ("\"" "\"" nil)
+                      )
+  "Parenthesis to be paired")
 
 (defun dp-self-insert-command (arg)
   "This function should be binded to opening pair"
@@ -67,9 +68,11 @@
           (when post-handler
             (funcall post-handler)))))))
 
-;; bind pair trigger keys
-(dolist (pair dp-pairs)
-  (global-set-key (car pair) 'dp-self-insert-command)
-  (define-key c-mode-base-map (car pair) 'dp-self-insert-command))
+(defun dp-bind-trigger-keys ()
+  "Binds opening keys to trigger auto-pairing and wrapping
+behavior"
+  (dolist (pair dp-pairs)
+    (global-set-key (car pair) 'dp-self-insert-command)
+    (define-key c-mode-base-map (car pair) 'dp-self-insert-command)))
 
 (provide 'dummyparens)

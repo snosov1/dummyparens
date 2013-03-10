@@ -2,5 +2,28 @@
 Dummyparens is a simple utility providing parentheses auto-pairing and
 wrapping behavior
 
-It's intended to be very simple and non-invasive as you would expect
+It's intended to be minimalistic and non-invasive as you would expect
 such simple functionality to be.
+
+For more sophisticated features, like HTML tags or LaTeX environments
+handling, consider looking at [[https://github.com/Fuco1/smartparens][smartparens]].
+
+* Configuration
+** Initialization
+Put this in your ~/.emacs file
+#+BEGIN_SRC elisp
+  (when (require 'dummyparens nil t)
+    (dp-bind-trigger-keys))
+#+END_SRC
+
+** Customization
+You can customize dp-pairs variable to add or remove symbols that have
+to be paired. E.g.
+#+BEGIN_SRC elisp
+  (setq dp-pairs '(
+                   ("(" ")" nil)
+                   ("[" "]" nil)
+                   ("{" "}" dp-brace-post-handler)
+                   ("\"" "\"" nil)
+                   ))
+#+END_SRC
