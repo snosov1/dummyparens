@@ -68,11 +68,16 @@
           (when post-handler
             (funcall post-handler)))))))
 
-(defun dp-bind-trigger-keys ()
-  "Binds opening keys to trigger auto-pairing and wrapping
-behavior"
-  (dolist (pair dp-pairs)
-    (global-set-key (car pair) 'dp-self-insert-command)
-    (define-key c-mode-base-map (car pair) 'dp-self-insert-command)))
+(defvar dp-keymap (make-sparse-keymap)
+  "Keymap used for `dummyparens-mode'.")
+(dolist (pair dp-pairs)
+  (define-key dp-keymap (car pair) 'dp-self-insert-command))
+
+(define-minor-mode dummyparens-mode
+  "Toggle dummyparens mode."
+  :keymap dp-keymap)
+
+(define-global-minor-mode global-dummyparens-mode dummyparens-mode
+  (lambda () (dummyparens-mode 1)))
 
 (provide 'dummyparens)
