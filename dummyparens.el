@@ -50,14 +50,17 @@
                         (1+ (region-end)))) ;; 1+ since we call self-insert next
     (goto-char (car dp-wrap)))
 
-  ;; call self-insert-command
-  (self-insert-command arg)
+  ;; which key was pressed
+  (setq key (single-key-description last-command-event))
+  ;; call the command that would've been called without dummyparens
+  (let ((dummyparens-mode nil))
+    (funcall (key-binding key t) arg))
 
   (save-excursion
     ;; for each pair
     (dolist (pair dp-pairs)
       ;; test if pressed key corresponds to an opening pair
-      (when (equal (single-key-description last-command-event) (car pair))
+      (when (equal key (car pair))
         ;; goto region end when wrapping
         (when dp-wrap
           (goto-char (cdr dp-wrap)))
