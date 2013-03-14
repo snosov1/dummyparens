@@ -39,6 +39,12 @@
                       )
   "Parenthesis to be paired")
 
+(defcustom dp-ignore-modes-list '(
+                                  minibuffer-inactive-mode
+                                  )
+  "Modes where dummyparens mode is inactive if allowed globally."
+  :type '(repeat symbol))
+
 (defun dp-self-insert-command (arg)
   "This function should be binded to opening pair"
   (interactive "p")
@@ -80,7 +86,15 @@
   "Toggle dummyparens mode."
   :keymap dp-keymap)
 
-(define-global-minor-mode global-dummyparens-mode dummyparens-mode
-  (lambda () (dummyparens-mode 1)))
+(defun turn-on-dummyparens-mode ()
+  "Turn on `dummyparens-mode'."
+  (interactive)
+  (unless (or (member major-mode dp-ignore-modes-list)
+              (eq (get major-mode 'mode-class) 'special))
+    (dummyparens-mode t)))
+
+(define-globalized-minor-mode global-dummyparens-mode
+  dummyparens-mode
+  turn-on-dummyparens-mode)
 
 (provide 'dummyparens)
