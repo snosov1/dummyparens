@@ -36,7 +36,6 @@
                       ("[" "]" nil)
                       ("{" "}" dp-brace-post-handler)
                       ("\"" "\"" nil)
-                      ("'" "'" nil)
                       )
   "Parenthesis to be paired")
 
