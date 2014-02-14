@@ -103,7 +103,6 @@
   "Toggle dummyparens mode."
   :keymap dp-keymap)
 
-;;;###autoload
 (defun turn-on-dummyparens-mode ()
   "Turn on `dummyparens-mode'."
   (interactive)
