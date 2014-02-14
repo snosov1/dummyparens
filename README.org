@@ -1,6 +1,6 @@
 * About
 Dummyparens is a simple utility providing parentheses auto-pairing and
-wrapping behavior.
+wrapping.
 
 When you press an opening parenthesis key it inserts the closing one
 for you. If a region is selected when you press the key, the region
