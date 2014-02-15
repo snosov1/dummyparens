@@ -42,6 +42,11 @@
 
 ;;; Code:
 
+(defvar dp-wrap nil
+  "This variable contains 2 points at which paired symbols must
+  be put to provide wrapping. If no wrapping is needed it's equal
+  to nil.")
+
 (defun dp-brace-post-handler ()
   "Indents after insertion"
   (when dp-wrap
@@ -54,13 +59,15 @@
                       ("{" "}" dp-brace-post-handler)
                       ("\"" "\"" nil)
                       )
-  "Parenthesis to be paired")
+  "Parenthesis to be paired"
+  :group 'dummyparens)
 
 (defcustom dp-ignore-modes-list '(
                                   minibuffer-inactive-mode
                                   )
   "Modes where dummyparens mode is inactive if allowed globally."
-  :type '(repeat symbol))
+  :type '(repeat symbol)
+  :group 'dummyparens)
 
 (defun dp-self-insert-command (arg)
   "This function should be binded to opening pair"
