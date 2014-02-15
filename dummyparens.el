@@ -81,25 +81,24 @@
     (goto-char (car dp-wrap)))
 
   ;; which key was pressed
-  (setq key (single-key-description last-command-event))
-  ;; call the command that would've been called without dummyparens
-  (let ((dummyparens-mode nil))
-    (funcall (key-binding key t) arg))
-
-  (save-excursion
-    ;; for each pair
-    (dolist (pair dp-pairs)
-      ;; test if pressed key corresponds to an opening pair
-      (when (equal key (car pair))
-        ;; goto region end when wrapping
-        (when dp-wrap
-          (goto-char (cdr dp-wrap)))
-        (let ((closing-pair (nth 1 pair))
-              (post-handler (nth 2 pair)))
-          (insert closing-pair)
-          ;; run post-handler
-          (when post-handler
-            (funcall post-handler)))))))
+  (let ((key (single-key-description last-command-event)))
+    ;; call the command that would've been called without dummyparens
+    (let ((dummyparens-mode nil))
+      (funcall (key-binding key t) arg))
+    (save-excursion
+      ;; for each pair
+      (dolist (pair dp-pairs)
+        ;; test if pressed key corresponds to an opening pair
+        (when (equal key (car pair))
+          ;; goto region end when wrapping
+          (when dp-wrap
+            (goto-char (cdr dp-wrap)))
+          (let ((closing-pair (nth 1 pair))
+                (post-handler (nth 2 pair)))
+            (insert closing-pair)
+            ;; run post-handler
+            (when post-handler
+              (funcall post-handler))))))))
 
 (defvar dp-keymap (make-sparse-keymap)
   "Keymap used for `dummyparens-mode'.")
