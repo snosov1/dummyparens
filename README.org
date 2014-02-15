@@ -13,9 +13,21 @@ It's intended to be minimalistic and non-invasive as you would expect
 such simple functionality to be.
 
 For more sophisticated features, like HTML tags or LaTeX environments
-handling, consider looking at [[https://github.com/Fuco1/smartparens][smartparens]].
+handling, consider [[https://github.com/Fuco1/smartparens][smartparens]].
 * Configuration
-** Initialization
+** Installation
+*** via package.el
+  This is the simplest method if you have the package.el module
+  (built-in since Emacs 24.1) you can simply use =M-x package-install=
+  and then put the following snippet in your ~/.emacs file
+  #+BEGIN_SRC elisp
+    (eval-after-load "dummyparens-autoloads"
+      '(progn
+         (if (require 'dummyparens nil t)
+             (global-dummyparens-mode)
+           (warn "dummyparens not found"))))
+  #+END_SRC
+*** Manual
 - Create folder ~/.emacs.d if you don't have it
 - Go to it and clone dummyparens there
   #+BEGIN_SRC sh
@@ -28,13 +40,27 @@ handling, consider looking at [[https://github.com/Fuco1/smartparens][smartparen
       (global-dummyparens-mode))
   #+END_SRC
 ** Customization
-You can customize dp-pairs variable to add or remove symbols that have
-to be paired. E.g.
-#+BEGIN_SRC elisp
-  (setq dp-pairs '(
-                   ("(" ")" nil)
-                   ("[" "]" nil)
-                   ("{" "}" dp-brace-post-handler)
-                   ("\"" "\"" nil)
-                   ))
-#+END_SRC
+*** via customize-group
+You can use =M-x customize-group= and choose =dummyparens= there.
+*** Manual
+- You can customize dp-pairs variable to add or remove symbols that
+  have to be paired. E.g.
+  #+BEGIN_SRC elisp
+    (setq dp-pairs '(
+                     ("(" ")" nil)
+                     ("[" "]" nil)
+                     ("{" "}" dp-brace-post-handler)
+                     ("\"" "\"" nil)
+                     ))
+  #+END_SRC
+  The last argument is an action to perform after the pair was
+  inserted.
+- If you want to disable dummyparens in certain modes, you can use the
+  =dp-ignore-modes-list= variable.
+  #+BEGIN_SRC elisp
+    (setq dp-ignore-modes-list '(
+                                 minibuffer-inactive-mode
+                                 ))
+  #+END_SRC
+  Although, this mode haven't yet been spotted to conflict with other
+  ones (this would kill the whole point of this mode!)
