@@ -1,11 +1,11 @@
-;;; dummyparens --- parenthesis auto-pairing and wrapping
+;;; dummyparens.el --- parenthesis auto-pairing and wrapping
 
 ;; Copyright (C) 2014 Sergei Nosov
 
 ;; Author: Sergei Nosov <sergei.nosov [at] gmail.com>
 ;; Version: 1.0
 ;; Keywords: dummyparens auto-pair wrapping
-;; X-URL: https://github.com/snosov1/dummyparens
+;; URL: https://github.com/snosov1/dummyparens
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -117,3 +117,4 @@
   turn-on-dummyparens-mode)
 
 (provide 'dummyparens)
+;;; dummyparens.el ends here
