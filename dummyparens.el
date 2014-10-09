@@ -3,7 +3,7 @@
 ;; Copyright (C) 2014 Sergei Nosov
 
 ;; Author: Sergei Nosov <sergei.nosov [at] gmail.com>
-;; Version: 1.0
+;; Version: 1.1
 ;; Keywords: dummyparens auto-pair wrapping
 ;; URL: https://github.com/snosov1/dummyparens
 
@@ -63,7 +63,6 @@
   :group 'dummyparens)
 
 (defcustom dp-ignore-modes-list '(
-                                  minibuffer-inactive-mode
                                   )
   "Modes where dummyparens mode is inactive if allowed globally."
   :type '(repeat symbol)
@@ -95,7 +94,12 @@
             (goto-char (cdr dp-wrap)))
           (let ((closing-pair (nth 1 pair))
                 (post-handler (nth 2 pair)))
-            (insert closing-pair)
+            ;; call the command for the closing pair
+            (let* ((dummyparens-mode nil)
+                   (command (key-binding closing-pair t))
+                   (last-command-event (string-to-char closing-pair))
+                   (this-command command))
+              (call-interactively command))
             ;; run post-handler
             (when post-handler
               (funcall post-handler))))))))
